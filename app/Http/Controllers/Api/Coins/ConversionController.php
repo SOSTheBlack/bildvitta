@@ -19,6 +19,6 @@ class ConversionController  extends CoinController
      */
     public function __invoke(Request $request): JsonResponse
     {
-        dd('ddd');
+        return response()->json(['message' => 'Hello World']);
     }
 }
