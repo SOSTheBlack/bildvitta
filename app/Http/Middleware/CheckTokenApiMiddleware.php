@@ -4,7 +4,9 @@ namespace App\Http\Middleware;
 
 use App\Exceptions\Api\TokenException;
 use Closure;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 /**
  * Class PrivateApiMiddleware
@@ -46,11 +48,11 @@ class CheckTokenApiMiddleware
      * @param  Request  $request
      * @param  Closure  $next
      *
-     * @return void
+     * @return Response
      *
      * @throws TokenException
      */
-    public function handle(Request $request, Closure $next): void
+    public function handle(Request $request, Closure $next): JsonResponse
     {
         $this->request = $request;
 
@@ -58,7 +60,7 @@ class CheckTokenApiMiddleware
 
         $this->matchingTokenHeader();
 
-        $next($request);
+        return $next($request);
     }
 
     /**
