@@ -2,22 +2,22 @@
 
 namespace App\Http\Controllers\Api\Coins;
 
+use App\Http\Requests\Api\Coins\ConversionRequest;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 /**
  * Class ConversionController
  *
  * @package App\Http\Controllers\APi\Coins
  */
-class ConversionController  extends CoinController
+class ConversionController extends CoinController
 {
     /**
-     * @param  Request  $request
+     * @param ConversionRequest $conversionRequest
      *
      * @return JsonResponse
      */
-    public function __invoke(Request $request): JsonResponse
+    public function __invoke(ConversionRequest $conversionRequest): JsonResponse
     {
         return response()->json(['message' => 'Hello World']);
     }
