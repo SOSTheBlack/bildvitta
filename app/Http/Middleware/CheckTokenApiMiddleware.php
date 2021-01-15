@@ -6,7 +6,6 @@ use App\Exceptions\Api\TokenException;
 use Closure;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 
 /**
  * Class PrivateApiMiddleware
@@ -48,7 +47,7 @@ class CheckTokenApiMiddleware
      * @param  Request  $request
      * @param  Closure  $next
      *
-     * @return Response
+     * @return JsonResponse
      *
      * @throws TokenException
      */
