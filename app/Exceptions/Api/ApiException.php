@@ -2,13 +2,13 @@
 
 namespace App\Exceptions\Api;
 
-use Exception;
+use App\Exceptions\AppException;
 use Throwable;
 
 /**
  * Class ApiException
  */
-class ApiException extends Exception implements Throwable
+class ApiException extends AppException implements Throwable
 {
     //
 }
