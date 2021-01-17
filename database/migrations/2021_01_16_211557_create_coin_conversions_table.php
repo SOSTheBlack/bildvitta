@@ -2,7 +2,6 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 /**
@@ -22,6 +21,7 @@ class CreateCoinConversionsTable extends Migration
             $table->string('origin');
             $table->string('destiny');
             $table->float('price');
+            $table->timestamps();
             $table->softDeletes();
 
             $table->unique(['origin', 'destiny']);

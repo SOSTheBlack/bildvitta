@@ -47,9 +47,9 @@ class CoinConversionEloquent implements CoinConversionRepository
             $this->model->destiny = $attributes['destiny'];
             $this->model->price = $attributes['price'];
 
-            $this->model->saveOrFail($attributes);
+            return $this->model->saveOrFail($attributes);
         } catch (Throwable $exception) {
-            throw new QueryException('error when insertingin database: '.$exception->getMessage(), 1001, $exception);
+            throw new QueryException('error when inserting database: '.$exception->getMessage(), 1001, $exception);
         }
     }
 
