@@ -45,13 +45,13 @@ class CoinConversionSeeder extends Seeder
             $graph = ['origin' => 'EUR', 'destiny' => 'USD', 'price' => 1.18];
             $this->coinConversionRepository->create($graph);
 
-            $graph = ['origin' => 'GBP', 'destiny' => 'USD', 'price' => 7.24];
+            $graph = ['origin' => 'GBP', 'destiny' => 'BRL', 'price' => 7.24];
             $this->coinConversionRepository->create($graph);
 
             $graph = ['origin' => 'BTC', 'destiny' => 'USD', 'price' => 10700];
             $this->coinConversionRepository->create($graph);
         } catch (Throwable $exception) {
-            dd($exception);
+            //
         }
     }
 }

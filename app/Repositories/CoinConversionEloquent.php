@@ -41,11 +41,11 @@ class CoinConversionEloquent implements CoinConversionRepository
     public function create(array $attributes): bool
     {
         try {
-            $this->resetModel($attributes);
+            $this->resetModel();
 
             $this->model->origin = $attributes['origin'];
             $this->model->destiny = $attributes['destiny'];
-            $this->model->price = $attributes['price'];
+            $this->model->price = (float) round($attributes['price'], 4);
 
             return $this->model->saveOrFail($attributes);
         } catch (Throwable $exception) {

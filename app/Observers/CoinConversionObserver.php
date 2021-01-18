@@ -2,9 +2,9 @@
 
 namespace App\Observers;
 
+use App\Exceptions\Repositories\QueryException;
 use App\Models\CoinConversion;
 use App\Repositories\Contracts\CoinConversionRepository;
-use Illuminate\Database\QueryException;
 
 /**
  * Class CoinConversionObserver
@@ -25,11 +25,10 @@ class CoinConversionObserver
         try {
             $coinConversionRepository = app(CoinConversionRepository::class);
 
-        $graph = ['origin' => $coinConversion->destiny, 'destiny' => $coinConversion->origin, 'price' => 1 / $coinConversion->price];
+            $graph = ['origin' => $coinConversion->destiny, 'destiny' => $coinConversion->origin, 'price' => 1 / $coinConversion->price];
 
-        $coinConversionRepository->create($graph);
-        } catch (\App\Exceptions\Repositories\QueryException $queryException) {
-
+            $coinConversionRepository->create($graph);
+        } catch (QueryException $queryException) {
         }
     }
 }
