@@ -1,0 +1,31 @@
+<?php
+
+namespace App\Component\Grifo;
+
+use App\Exceptions\Repositories\QueryException;
+use App\Repositories\Contracts\CoinConversionRepository;
+use Illuminate\Support\Collection;
+
+/**
+ * Trait GrifoHelper
+ *
+ * @package App\Component\Grifo
+ */
+trait  GrifoHelper
+{
+    /**
+     * @return GrifoHelper
+     *
+     * @throws QueryException
+     */
+    public function loadConversionList(): GrifoHelper
+    {
+        $coinConversionResult = app(CoinConversionRepository::class)->getAll();
+
+        $groupByOrigin = $coinConversionResult->groupBy('origin');
+
+        $this->graph = $groupByOrigin->map(fn(Collection $value) => $value->pluck('price', 'destiny'))->toArray();
+
+        return $this;
+    }
+}

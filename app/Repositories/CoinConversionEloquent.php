@@ -5,6 +5,8 @@ namespace App\Repositories;
 use App\Exceptions\Repositories\QueryException;
 use App\Models\CoinConversion;
 use App\Repositories\Contracts\CoinConversionRepository;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Collection;
 use Throwable;
 
 /**
@@ -61,5 +63,27 @@ class CoinConversionEloquent implements CoinConversionRepository
     private function resetModel(): void
     {
         $this->model = app($this->model::class);
+    }
+
+    /**
+     * @return Collection
+     *
+     * @throws QueryException
+     */
+    public function getAll(): Collection
+    {
+        try {
+            $this->resetModel();
+
+            $result = $this->model->get();
+
+            if ($result->isEmpty()) {
+                throw new ModelNotFoundException('no results for model');
+            }
+
+            return collect($result->toArray());
+        } catch (Throwable $exception) {
+            throw new QueryException('error when inserting database: '.$exception->getMessage(), 1001, $exception);
+        }
     }
 }

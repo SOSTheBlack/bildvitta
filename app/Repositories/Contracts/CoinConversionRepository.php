@@ -3,6 +3,7 @@
 namespace App\Repositories\Contracts;
 
 use App\Exceptions\Repositories\QueryException;
+use Illuminate\Support\Collection;
 
 /**
  * Interface CoinConversionRepository
@@ -17,4 +18,11 @@ interface CoinConversionRepository
      * @throws QueryException
      */
     public function create(array $attributes): bool;
+
+    /**
+     * @return Collection
+     *
+     * @throws QueryException
+     */
+    public function getAll(): Collection;
 }
