@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Eloquent;
 use Illuminate\Database\Eloquent\Builder as BuilderEloquent;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -34,20 +35,10 @@ use Illuminate\Support\Carbon;
  * @method static BuilderEloquent|CoinConversion whereUpdatedAt($value)
  * @method static BuilderQuery|CoinConversion withTrashed()
  * @method static BuilderQuery|CoinConversion withoutTrashed()
- * @mixin \Eloquent
+ *
+ * @mixin Eloquent
  */
 class CoinConversion extends Model
 {
     use HasFactory, SoftDeletes;
-
-    /**
-     * Create a new Eloquent model instance.
-     *
-     * @param  array  $attributes
-     * @return void
-     */
-    public function __construct(array $attributes = [])
-    {
-        parent::__construct($attributes);
-    }
 }

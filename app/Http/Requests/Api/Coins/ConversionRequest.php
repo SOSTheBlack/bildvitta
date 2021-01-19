@@ -7,6 +7,10 @@ use Illuminate\Foundation\Http\FormRequest;
 /**
  * Class ConversionRequest.
  *
+ * @property string coin_from
+ * @property string coin_to
+ * @property int quantity
+ *
  * @package App\Http\Requests\Api\Coins
  */
 class ConversionRequest extends FormRequest
@@ -30,8 +34,8 @@ class ConversionRequest extends FormRequest
     {
         return [
             'quantity' => ['required', 'numeric', 'regex:/^\d{1,13}(\.\d{1,4})?$/'],
-            'coin_to' => ['required', 'string'],
-            'coin_from' => ['required', 'string']
+            'coin_from' => ['required', 'string'],
+            'coin_to' => ['required', 'string']
         ];
     }
 }

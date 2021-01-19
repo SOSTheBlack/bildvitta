@@ -79,7 +79,7 @@ abstract class BaseGrifoComponent
     /**
      * @return float
      */
-    public function get(): float
+    public function getConversionPrice(): float
     {
         $conversionSteps = $this->getStepListToConversion();
         $graph = $this->getGraph();

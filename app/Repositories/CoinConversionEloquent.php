@@ -47,7 +47,7 @@ class CoinConversionEloquent implements CoinConversionRepository
 
             $this->model->origin = $attributes['origin'];
             $this->model->destiny = $attributes['destiny'];
-            $this->model->price = (float) round($attributes['price'], 4);
+            $this->model->price = $attributes['price'];
 
             return $this->model->saveOrFail($attributes);
         } catch (Throwable $exception) {

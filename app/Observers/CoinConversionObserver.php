@@ -25,7 +25,9 @@ class CoinConversionObserver
         try {
             $coinConversionRepository = app(CoinConversionRepository::class);
 
-            $graph = ['origin' => $coinConversion->destiny, 'destiny' => $coinConversion->origin, 'price' => 1 / $coinConversion->price];
+            $priceConversion = 1 / $coinConversion->price;
+
+            $graph = ['origin' => $coinConversion->destiny, 'destiny' => $coinConversion->origin, 'price' => $priceConversion];
 
             $coinConversionRepository->create($graph);
         } catch (QueryException $queryException) {
