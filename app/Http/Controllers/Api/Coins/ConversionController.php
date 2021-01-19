@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Api\Coins;
 
 use App\Components\Grifo\Grifo;
-use App\Exceptions\Repositories\QueryException;
 use App\Http\Requests\Api\Coins\ConversionRequest;
 use Illuminate\Http\JsonResponse;
+use JetBrains\PhpStorm\ArrayShape;
 
 /**
  * Class ConversionController
@@ -22,34 +22,58 @@ class ConversionController extends CoinController
     private Grifo $grifo;
 
     /**
+     * @var ConversionRequest
+     */
+    private ConversionRequest $conversionRequest;
+
+    /**
      * ConversionController constructor.
      *
      * @param  Grifo  $grifo
+     * @param  ConversionRequest  $conversionRequest
      */
-    public function __construct(Grifo $grifo)
+    public function __construct(ConversionRequest $conversionRequest, Grifo $grifo)
     {
         $this->grifo = $grifo;
+        $this->conversionRequest = $conversionRequest;
+
+        $this->grifo->setOrigin($this->conversionRequest->coin_from)->setDestiny($this->conversionRequest->coin_to);
     }
 
     /**
-     * @param  ConversionRequest  $conversionRequest
-     *
      * @return JsonResponse
      */
-    public function __invoke(ConversionRequest $conversionRequest): JsonResponse
+    public function __invoke(): JsonResponse
     {
-        try {
-            $this->grifo->setOrigin($conversionRequest->coin_from)->setDestiny($conversionRequest->coin_to);
+        $priceConversion = $this->getPriceConversion();
 
-            $priceConversion = $this->grifo->conversionPrice($conversionRequest->quantity);
+        $response = $this->structureResponse($priceConversion);
 
-            return response()->json([
-                'from'     => $conversionRequest->coin_from,
-                'to'       => $conversionRequest->coin_to,
-                'quantity' => $conversionRequest->quantity,
-                'price'    => floor($priceConversion * 100) / 100,
-            ]);
-        } catch (QueryException $queryException) {
-        }
+        return response()->json($response);
+    }
+
+    /**
+     * @return float
+     */
+    private function getPriceConversion(): float
+    {
+        $priceConversion = $this->grifo->conversionPrice($this->conversionRequest->quantity);
+
+        return floor($priceConversion * 100) / 100;
+    }
+
+    /**
+     * @param  float  $priceConversion
+     *
+     * @return array
+     */
+    #[ArrayShape(['from' => "string", 'to' => "string", 'quantity' => "int", 'price' => "float"])]
+    private function structureResponse(float $priceConversion): array {
+        return [
+            'coin_from' => $this->conversionRequest->coin_from,
+            'coin_to'   => $this->conversionRequest->coin_to,
+            'quantity'  => $this->conversionRequest->quantity,
+            'price'     => (float) number_format(num: $priceConversion, decimals: 2, thousands_separator: ''),
+        ];
     }
 }

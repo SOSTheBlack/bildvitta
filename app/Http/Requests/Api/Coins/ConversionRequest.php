@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Api\Coins;
 
 use Illuminate\Foundation\Http\FormRequest;
+use JetBrains\PhpStorm\ArrayShape;
 
 /**
  * Class ConversionRequest.
@@ -30,12 +31,12 @@ class ConversionRequest extends FormRequest
      *
      * @return array
      */
-    #[\JetBrains\PhpStorm\ArrayShape(['quantity' => "string[]", 'coin_to' => "string[]", 'coin_from' => "string[]"])] public function rules(): array
+    #[ArrayShape(['quantity' => "string[]", 'coin_to' => "string[]", 'coin_from' => "string[]"])] public function rules(): array
     {
         return [
-            'quantity' => ['required', 'numeric', 'regex:/^\d{1,13}(\.\d{1,4})?$/'],
-            'coin_from' => ['required', 'string'],
-            'coin_to' => ['required', 'string']
+            'quantity'  => ['required', 'numeric', 'regex:/^\d{1,13}(\.\d{1,4})?$/'],
+            'coin_from' => ['required', 'string', 'exists:coin_conversions,origin'],
+            'coin_to'   => ['required', 'string', 'exists:coin_conversions,destiny'],
         ];
     }
 }
