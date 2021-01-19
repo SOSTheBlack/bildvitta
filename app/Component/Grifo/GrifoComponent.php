@@ -1,38 +1,65 @@
 <?php
 
-namespace App\Component\Grifo;
+namespace App\Components\Grifo;
 
-use Exception;
 use SplDoublyLinkedList;
 use SplQueue;
 
 /**
- * Class GrifoComponent
+ * Class GrifoComponent.
+ *
+ * @link https://www.sitepoint.com/data-structures-4/
  *
  * @package App\Component
  */
-class GrifoComponent extends BaseGrifoComponent
+class GrifoComponent extends BaseGrifoComponent implements Grifo
 {
-    private array $visited;
-
-    private array $path;
-
-    private SplQueue $queue;
+    use GrifoHelper;
 
     /**
-     * GrifoComponent constructor.
+     * Coin from.
      *
-     * @param $graph
+     * @var string
      */
-    public function __construct(array $graph = [])
+    protected string $origin;
+
+    /**
+     * Coin to.
+     *
+     * @var string
+     */
+    protected string $destiny;
+
+    /**
+     * Data graph.
+     *
+     * @var array
+     */
+    protected array $graph;
+
+    /**
+     * @param  int  $quantity
+     *
+     * @return float
+     *
+     * @throws GrifoException
+     */
+    public function conversionPrice(int $quantity): float
     {
-        $this->graph = $graph;
+        $conversionSteps = $this->getStepListToConversion();
+        $graph = $this->getGraph();
+
+        foreach ($conversionSteps as $conversion) {
+            $quantity = $quantity * $graph[$conversion['from']][$conversion['to']];
+        }
+
+        return $quantity;
     }
 
     /**
      * @return array
      *
-     * @throws Exception
+     * @throws GrifoException
      */
     public function getStepListToConversion(): array
     {
@@ -50,58 +77,41 @@ class GrifoComponent extends BaseGrifoComponent
         $this->searchDestination();
 
         if (! isset($this->path[$this->destiny])) {
-            throw new Exception(400, 'Currency conversion is not possible');
+            throw new GrifoException(vsprintf('Currency(%s->%s) conversion is not possible', [$this->origin, $this->destiny]), 1001);
         }
 
         return $this->definedSteps();
     }
 
-    private function resetVisited()
+    /**
+     * @param  string  $origin
+     *
+     * @return Grifo
+     */
+    public function setOrigin(string $origin): Grifo
     {
-        $this->visited = [];
-        foreach (array_keys($this->graph) as $coinCode) {
-            $this->visited[$coinCode] = false;
-        }
+        $this->origin = $origin;
+
+        return $this;
     }
 
-    private function searchDestination()
+    /**
+     * @param  string  $destiny
+     *
+     * @return Grifo
+     */
+    public function setDestiny(string $destiny): Grifo
     {
-        while (! $this->queue->isEmpty() && $this->queue->bottom() != $this->destiny) {
-            $node = $this->queue->dequeue();
-            if (! empty($this->graph[$node])) {
-                foreach ($this->graph[$node] as $currencyCode => $price) {
-                    if (! $this->visited[$currencyCode]) {
-                        $this->queue->enqueue($currencyCode);
-                        $this->visited[$currencyCode] = true;
+        $this->destiny = $destiny;
 
-                        $this->path[$currencyCode] = clone $this->path[$node];
-                        $this->path[$currencyCode]->push($currencyCode);
-                    }
-                }
-            }
-        }
+        return $this;
     }
 
     /**
      * @return array
      */
-    private function definedSteps(): array
+    public function getGraph(): array
     {
-        $steps = [];
-
-        foreach ($this->path[$this->destiny] as $index => $coinCode) {
-            $hopTo = $index < $this->path[$this->destiny]->count() - 1 ? 1 : 0;
-
-            if ($hopTo == 0) {
-                break;
-            }
-
-            $steps[] = [
-                'from' => $coinCode,
-                'to'   => $this->path[$this->destiny][$index + $hopTo],
-            ];
-        }
-
-        return $steps;
+        return $this->graph;
     }
 }

@@ -35,7 +35,6 @@ use Illuminate\Support\Carbon;
  * @method static BuilderEloquent|CoinConversion whereUpdatedAt($value)
  * @method static BuilderQuery|CoinConversion withTrashed()
  * @method static BuilderQuery|CoinConversion withoutTrashed()
- *
  * @mixin Eloquent
  */
 class CoinConversion extends Model

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Component\Grifo;
+namespace App\Components\Grifo;
 
 use App\Exceptions\Repositories\QueryException;
 use App\Repositories\Contracts\CoinConversionRepository;
@@ -9,7 +9,7 @@ use Illuminate\Support\Collection;
 /**
  * Trait GrifoHelper
  *
- * @package App\Component\Grifo
+ * @package App\Components\Grifo
  */
 trait  GrifoHelper
 {

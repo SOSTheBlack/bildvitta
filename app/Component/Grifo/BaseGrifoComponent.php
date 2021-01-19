@@ -1,94 +1,99 @@
 <?php
 
-namespace App\Component\Grifo;
+namespace App\Components\Grifo;
+
+use SplQueue;
 
 /**
  * Class BaseGrifoComponent
  *
- * @package App\Component\Grifo
+ * @package App\Components\Grifo
  */
 abstract class BaseGrifoComponent
 {
-    use GrifoHelper;
-
-    protected string $origin;
-
-    protected string $destiny;
-
-    protected array $graph;
-
-    protected int $quantity;
+    /**
+     * Queue to keep a list of unvisited nodes so we can go back and process them after each level.
+     *
+     * @var array
+     */
+    protected array $visited;
 
     /**
-     * @param  string  $origin
+     * Patch that will store the shortest path to reach the destination.
      *
-     * @return BaseGrifoComponent
+     * @var array
      */
-    public function setOrigin(string $origin): BaseGrifoComponent
-    {
-        $this->origin = $origin;
+    protected array $path;
 
-        return $this;
+    /**
+     *  The SplQueue class provides the main functionalities of a queue implemented using a doubly linked list.
+     *
+     * @var SplQueue
+     */
+    protected SplQueue $queue;
+
+    /**
+     * Clear queue visited.
+     *
+     * @return void
+     */
+    protected function resetVisited(): void
+    {
+        $this->visited = [];
+
+        foreach (array_keys($this->graph) as $coinCode) {
+            $this->visited[$coinCode] = false;
+        }
     }
 
     /**
-     * @param  string  $destiny
+     * Push graph to patch.
      *
-     * @return BaseGrifoComponent
+     * @return void
      */
-    public function setDestiny(string $destiny): BaseGrifoComponent
+    protected function searchDestination(): void
     {
-        $this->destiny = $destiny;
+        while (! $this->queue->isEmpty() && $this->queue->bottom() != $this->destiny) {
+            $node = $this->queue->dequeue();
 
-        return $this;
+            if (! empty($this->graph[$node])) {
+
+                foreach ($this->graph[$node] as $currencyCode => $price) {
+
+                    if (! $this->visited[$currencyCode]) {
+                        $this->queue->enqueue($currencyCode);
+                        $this->visited[$currencyCode] = true;
+
+                        $this->path[$currencyCode] = clone $this->path[$node];
+                        $this->path[$currencyCode]->push($currencyCode);
+                    }
+                }
+            }
+        }
     }
 
     /**
+     * Conversion path.
+     *
      * @return array
      */
-    public function getGraph(): array
+    protected function definedSteps(): array
     {
-        return $this->graph;
-    }
+        $steps = [];
 
-    /**
-     *
-     * @param  array  $graph
-     *
-     * @return BaseGrifoComponent
-     */
-    public function setGraph(array $graph): BaseGrifoComponent
-    {
-        $this->graph = $graph;
+        foreach ($this->path[$this->destiny] as $index => $coinCode) {
+            $hopTo = $index < $this->path[$this->destiny]->count() - 1 ? 1 : 0;
 
-        return $this;
-    }
+            if ($hopTo == 0) {
+                break;
+            }
 
-    /**
-     * @param  int  $quantity
-     *
-     * @return BaseGrifoComponent
-     */
-    public function setQuantity(int $quantity): BaseGrifoComponent
-    {
-        $this->quantity = $quantity;
-
-        return $this;
-    }
-
-    /**
-     * @return float
-     */
-    public function getConversionPrice(): float
-    {
-        $conversionSteps = $this->getStepListToConversion();
-        $graph = $this->getGraph();
-        $amount = $this->quantity;
-
-        foreach ($conversionSteps as $conversion) {
-            $amount = $amount * $graph[$conversion['from']][$conversion['to']];
+            $steps[] = [
+                'from' => $coinCode,
+                'to'   => $this->path[$this->destiny][$index + $hopTo],
+            ];
         }
 
-        return $amount;
+        return $steps;
     }
 }

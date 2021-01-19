@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api\Coins;
 
-use App\Component\Grifo\GrifoComponent;
+use App\Components\Grifo\Grifo;
 use App\Exceptions\Repositories\QueryException;
 use App\Http\Requests\Api\Coins\ConversionRequest;
 use Illuminate\Http\JsonResponse;
@@ -15,6 +15,23 @@ use Illuminate\Http\JsonResponse;
 class ConversionController extends CoinController
 {
     /**
+     * Grifo Component.
+     *
+     * @var Grifo
+     */
+    private Grifo $grifo;
+
+    /**
+     * ConversionController constructor.
+     *
+     * @param  Grifo  $grifo
+     */
+    public function __construct(Grifo $grifo)
+    {
+        $this->grifo = $grifo;
+    }
+
+    /**
      * @param  ConversionRequest  $conversionRequest
      *
      * @return JsonResponse
@@ -22,20 +39,15 @@ class ConversionController extends CoinController
     public function __invoke(ConversionRequest $conversionRequest): JsonResponse
     {
         try {
-            $coinConversionComponent = new GrifoComponent();
-            $coinConversionComponent->loadConversionList();
-            $coinConversionComponent
-                ->setOrigin($conversionRequest->coin_from)
-                ->setDestiny($conversionRequest->coin_to)
-                ->setQuantity($conversionRequest->quantity);
+            $this->grifo->setOrigin($conversionRequest->coin_from)->setDestiny($conversionRequest->coin_to);
 
-            $priceConversion = $coinConversionComponent->getConversionPrice();
+            $priceConversion = $this->grifo->conversionPrice($conversionRequest->quantity);
 
             return response()->json([
-                'from' => $conversionRequest->coin_from,
-                'to' => $conversionRequest->coin_to,
+                'from'     => $conversionRequest->coin_from,
+                'to'       => $conversionRequest->coin_to,
                 'quantity' => $conversionRequest->quantity,
-                'price' => $priceConversion
+                'price'    => floor($priceConversion * 100) / 100,
             ]);
         } catch (QueryException $queryException) {
         }
