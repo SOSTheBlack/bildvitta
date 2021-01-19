@@ -24,12 +24,12 @@ class ConversionRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array['price' => "string[]", 'coin_to' => "string[]", 'coin_from' => "string[]"]
+     * @return array
      */
-    public function rules(): array
+    #[\JetBrains\PhpStorm\ArrayShape(['quantity' => "string[]", 'coin_to' => "string[]", 'coin_from' => "string[]"])] public function rules(): array
     {
         return [
-            'price' => ['required', 'numeric', 'regex:/^\d{1,13}(\.\d{1,4})?$/'],
+            'quantity' => ['required', 'numeric', 'regex:/^\d{1,13}(\.\d{1,4})?$/'],
             'coin_to' => ['required', 'string'],
             'coin_from' => ['required', 'string']
         ];
