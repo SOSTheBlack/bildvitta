@@ -23,7 +23,7 @@ class ConversionRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return auth()->guest();
+        return request()->header('TOKEN') === config('services.api.token');
     }
 
     /**
@@ -31,7 +31,8 @@ class ConversionRequest extends FormRequest
      *
      * @return array
      */
-    #[ArrayShape(['quantity' => "string[]", 'coin_to' => "string[]", 'coin_from' => "string[]"])] public function rules(): array
+    #[ArrayShape(['quantity' => "string[]", 'coin_to' => "string[]", 'coin_from' => "string[]"])]
+    public function rules(): array
     {
         return [
             'quantity'  => ['required', 'numeric', 'regex:/^\d{1,13}(\.\d{1,4})?$/'],
