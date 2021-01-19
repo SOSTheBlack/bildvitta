@@ -20,7 +20,7 @@ class CreateCoinConversionsTable extends Migration
             $table->id();
             $table->string('origin');
             $table->string('destiny');
-            $table->double('price');
+            $table->string('price');
             $table->timestamps();
             $table->softDeletes();
 

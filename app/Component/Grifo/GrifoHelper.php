@@ -14,18 +14,16 @@ use Illuminate\Support\Collection;
 trait  GrifoHelper
 {
     /**
-     * @return GrifoHelper
+     * @return void
      *
      * @throws QueryException
      */
-    public function loadConversionList(): GrifoHelper
+    public function loadConversionList()
     {
         $coinConversionResult = app(CoinConversionRepository::class)->getAll();
 
         $groupByOrigin = $coinConversionResult->groupBy('origin');
 
         $this->graph = $groupByOrigin->map(fn(Collection $value) => $value->pluck('price', 'destiny'))->toArray();
-
-        return $this;
     }
 }
