@@ -2,8 +2,17 @@
 
 namespace App\Providers;
 
+use App\Components\Grifo\GrifoComponent;
+use App\Components\Grifo\Grifo;
+use Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider;
+use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
 
+/**
+ * Class AppServiceProvider
+ *
+ * @package App\Providers
+ */
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -11,9 +20,18 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register()
+    public function register(): void
     {
-        //
+        if ($this->app->isLocal()) {
+            $this->app->register(IdeHelperServiceProvider::class);
+        }
+
+        $this->app->bind(Grifo::class, function(Application $application) {
+            $grifoComponent = new GrifoComponent();
+            $grifoComponent->loadConversionList();
+
+            return $grifoComponent;
+        });
     }
 
     /**
@@ -21,7 +39,7 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         //
     }

@@ -3,9 +3,14 @@
 namespace App\Http\Requests\Api\Coins;
 
 use Illuminate\Foundation\Http\FormRequest;
+use JetBrains\PhpStorm\ArrayShape;
 
 /**
  * Class ConversionRequest.
+ *
+ * @property string coin_from
+ * @property string coin_to
+ * @property int quantity
  *
  * @package App\Http\Requests\Api\Coins
  */
@@ -18,20 +23,21 @@ class ConversionRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return auth()->guest();
+        return request()->header('TOKEN') === config('services.api.token');
     }
 
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array['price' => "string[]", 'coin_to' => "string[]", 'coin_from' => "string[]"]
+     * @return array
      */
+    #[ArrayShape(['quantity' => "string[]", 'coin_to' => "string[]", 'coin_from' => "string[]"])]
     public function rules(): array
     {
         return [
-            'price' => ['required', 'numeric', 'regex:/^\d{1,13}(\.\d{1,4})?$/'],
-            'coin_to' => ['required', 'string'],
-            'coin_from' => ['required', 'string']
+            'quantity'  => ['required', 'numeric', 'regex:/^\d{1,13}(\.\d{1,4})?$/'],
+            'coin_from' => ['required', 'string', 'exists:coin_conversions,origin'],
+            'coin_to'   => ['required', 'string', 'exists:coin_conversions,destiny'],
         ];
     }
 }
