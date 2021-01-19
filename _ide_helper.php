@@ -17295,6 +17295,9 @@ namespace {
             return $instance->fromQuery($query, $bindings);
         }
 
+
+        
+
         /**
          * Find a model by its primary key.
          *
