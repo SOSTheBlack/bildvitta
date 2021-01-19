@@ -14,4 +14,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('api.private')->post('/coins/conversions')->uses(ConversionController::class)->name('api.coins.conversion');
+Route::middleware('api.private')->get('/coins/conversions')->uses(ConversionController::class)->name('api.coins.conversion');
