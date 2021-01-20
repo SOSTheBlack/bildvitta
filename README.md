@@ -1,8 +1,6 @@
 # Coin Conversion
 
-![Tests](public/assests/bild_vitta.png)
-
-![CUrrency](public/assests/currency-converter.png)
+![Currency](public/assests/currency-converter.png)![Tests](public/assests/bild_vitta.png)
 
 ## **Requerimentos**
 
