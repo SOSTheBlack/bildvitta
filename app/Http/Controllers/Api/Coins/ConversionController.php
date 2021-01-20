@@ -46,15 +46,15 @@ class ConversionController extends CoinController
             ->setOrigin($this->conversionRequest->coin_from)
             ->setDestiny($this->conversionRequest->coin_to);
 
-        $priceConversion = $this->getPriceConversion();
+        $priceConverted = $this->priceConverted();
 
-        return new ConversionResource($this->conversionRequest, $priceConversion);
+        return new ConversionResource($this->conversionRequest, $priceConverted);
     }
 
     /**
      * @return float
      */
-    private function getPriceConversion(): float
+    private function priceConverted(): float
     {
         $quantity = $this->conversionRequest->quantity;
 

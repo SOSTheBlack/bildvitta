@@ -14,6 +14,16 @@ use App\Repositories\Contracts\CoinConversionRepository;
 class CoinConversionObserver
 {
     /**
+     * @var CoinConversionRepository
+     */
+    private CoinConversionRepository $coinConversionRepository;
+
+    public function __construct(CoinConversionRepository $coinConversionRepository)
+    {
+        $this->coinConversionRepository = $coinConversionRepository;
+    }
+
+    /**
      * Handle the CoinConversion "created" event.
      *
      * @param  CoinConversion  $coinConversion
@@ -23,13 +33,11 @@ class CoinConversionObserver
     public function created(CoinConversion $coinConversion)
     {
         try {
-            $coinConversionRepository = app(CoinConversionRepository::class);
-
             $priceConversion = 1 / $coinConversion->price;
 
             $graph = ['origin' => $coinConversion->destiny, 'destiny' => $coinConversion->origin, 'price' => $priceConversion];
 
-            $coinConversionRepository->create($graph);
+            $this->coinConversionRepository->create($graph);
         } catch (QueryException $queryException) {
         }
     }

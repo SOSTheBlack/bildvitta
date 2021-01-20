@@ -2,10 +2,10 @@
 
 namespace App\Repositories;
 
+use App\Exceptions\Repositories\ModelNotFoundException;
 use App\Exceptions\Repositories\QueryException;
 use App\Models\CoinConversion;
 use App\Repositories\Contracts\CoinConversionRepository;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Collection;
 use Throwable;
 
@@ -78,7 +78,7 @@ class CoinConversionEloquent implements CoinConversionRepository
             $result = $this->model->get();
 
             if ($result->isEmpty()) {
-                throw new ModelNotFoundException('no results for model');
+                throw new ModelNotFoundException('no results for model', 1001);
             }
 
             return collect($result->toArray());

@@ -18,7 +18,7 @@ use Illuminate\Support\Carbon;
  * @property int $id
  * @property string $origin
  * @property string $destiny
- * @property float $price
+ * @property double $price
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property Carbon|null $deleted_at

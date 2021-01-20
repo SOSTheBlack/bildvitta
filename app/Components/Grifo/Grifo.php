@@ -7,6 +7,7 @@ namespace App\Components\Grifo;
  *
  * @method Grifo setOrigin(string $origin)
  * @method Grifo setDestiny(string $destiny)
+ * @method array getGraph()
  *
  * @package App\Components\Grifo
  */
