@@ -14,5 +14,5 @@ use Throwable;
  */
 class GrifoException extends AppException implements Throwable
 {
-
+    //
 }

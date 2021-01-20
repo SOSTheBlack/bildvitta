@@ -3,7 +3,6 @@
 namespace App\Http\Requests\Api\Coins;
 
 use Illuminate\Foundation\Http\FormRequest;
-use JetBrains\PhpStorm\ArrayShape;
 
 /**
  * Class ConversionRequest.
@@ -23,7 +22,7 @@ class ConversionRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return request()->header('TOKEN') === config('services.api.token');
+        return true;
     }
 
     /**
@@ -31,7 +30,6 @@ class ConversionRequest extends FormRequest
      *
      * @return array
      */
-    #[ArrayShape(['quantity' => "string[]", 'coin_to' => "string[]", 'coin_from' => "string[]"])]
     public function rules(): array
     {
         return [

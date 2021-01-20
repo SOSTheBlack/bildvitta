@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
  *
  * @package App\Http\Middleware
  */
-class CheckTokenApiMiddleware
+class VerifyApiTokenMiddleware
 {
     /**
      * Token key name.
@@ -48,8 +48,6 @@ class CheckTokenApiMiddleware
      * @param  Closure  $next
      *
      * @return JsonResponse
-     *
-     * @throws TokenException
      */
     public function handle(Request $request, Closure $next): JsonResponse
     {
@@ -70,7 +68,7 @@ class CheckTokenApiMiddleware
     private function hasTokenHeader(): void
     {
         if (! $this->request->hasHeader(self::HEADER_TOKEN_KEY)) {
-            throw new TokenException('missing token, is has required');
+            throw new TokenException(401, 'missing token, is has required', code: 1001);
         }
     }
 
@@ -82,7 +80,7 @@ class CheckTokenApiMiddleware
     private function matchingTokenHeader(): void
     {
         if ($this->privateToken !== $this->request->header(self::HEADER_TOKEN_KEY)) {
-            throw new TokenException('invalid token');
+            throw new TokenException(401, 'invalid token', code: 1002);
         }
     }
 }

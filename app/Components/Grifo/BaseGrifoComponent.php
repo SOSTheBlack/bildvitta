@@ -57,9 +57,7 @@ abstract class BaseGrifoComponent
             $node = $this->queue->dequeue();
 
             if (! empty($this->graph[$node])) {
-
                 foreach ($this->graph[$node] as $currencyCode => $price) {
-
                     if (! $this->visited[$currencyCode]) {
                         $this->queue->enqueue($currencyCode);
                         $this->visited[$currencyCode] = true;

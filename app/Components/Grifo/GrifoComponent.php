@@ -84,6 +84,14 @@ class GrifoComponent extends BaseGrifoComponent implements Grifo
     }
 
     /**
+     * @return array
+     */
+    public function getGraph(): array
+    {
+        return $this->graph;
+    }
+
+    /**
      * @param  string  $origin
      *
      * @return Grifo
@@ -105,13 +113,5 @@ class GrifoComponent extends BaseGrifoComponent implements Grifo
         $this->destiny = $destiny;
 
         return $this;
-    }
-
-    /**
-     * @return array
-     */
-    public function getGraph(): array
-    {
-        return $this->graph;
     }
 }

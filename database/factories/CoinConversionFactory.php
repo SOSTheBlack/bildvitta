@@ -5,6 +5,11 @@ namespace Database\Factories;
 use App\Models\CoinConversion;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * Class CoinConversionFactory
+ *
+ * @package Database\Factories
+ */
 class CoinConversionFactory extends Factory
 {
     /**
@@ -19,7 +24,7 @@ class CoinConversionFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    public function definition(): array
     {
         return [
             //
