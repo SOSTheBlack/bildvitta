@@ -1,6 +1,10 @@
 # Coin Conversion
 
-**Requerimentos**
+![Tests](public/assests/bild_vitta.png)
+
+![CUrrency](public/assests/currency-converter.png)
+
+## **Requerimentos**
 
 - PHP 8 ou superior
 - Composer
@@ -34,10 +38,15 @@ Crie o seu arquivo de configuração `.env`
 cp .env.example .env
 ```
 
-Gere a key de segurança do software
+Gere a chave de segurança do software
 
 ```shell
 php artisan key:generate
+```
+
+Rode as migração de banco de dados
+```shell
+php artisan migrate --seed
 ```
 
 Inicializando o software
