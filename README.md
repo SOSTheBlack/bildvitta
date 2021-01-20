@@ -2,6 +2,8 @@
 
 ![Currency](public/assests/currency-converter.png)![Tests](public/assests/bild_vitta.png)
 
+Esse software tem o intuito de fazer a conversão de moedas pré cadastradas.
+
 ## **Requerimentos**
 
 - PHP 8 ou superior
@@ -31,6 +33,7 @@ composer install
 ```
 
 Crie o seu arquivo de configuração `.env`
+Não esqueça de alterar os dados de conexão com o banco de dados.
 
 ```shell
 cp .env.example .env
