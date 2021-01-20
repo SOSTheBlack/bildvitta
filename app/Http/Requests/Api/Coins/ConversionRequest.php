@@ -34,8 +34,8 @@ class ConversionRequest extends FormRequest
     {
         return [
             'quantity'  => ['required', 'numeric', 'regex:/^\d{1,13}(\.\d{1,4})?$/'],
-            'coin_from' => ['required', 'string', 'exists:coin_conversions,origin'],
-            'coin_to'   => ['required', 'string', 'exists:coin_conversions,destiny'],
+            'coin_from' => ['required', 'string', 'exists:\App\Models\CoinConversion,origin'],
+            'coin_to'   => ['required', 'string', 'exists:\App\Models\CoinConversion,destiny'],
         ];
     }
 }
