@@ -51,7 +51,7 @@ class ConversionResource extends JsonResource
         return [
             'coin_from' => $this->conversionRequest->coin_from,
             'coin_to'   => $this->conversionRequest->coin_to,
-            'quantity'  => $this->conversionRequest->quantity,
+            'quantity'  => (int) $this->conversionRequest->quantity,
             'price'     => (float) number_format(num: $this->priceConverted, decimals: 2, thousands_separator: ''),
         ];
     }

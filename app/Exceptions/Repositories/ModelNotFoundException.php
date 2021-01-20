@@ -3,10 +3,11 @@
 namespace App\Exceptions\Repositories;
 
 use Illuminate\Database\Eloquent\ModelNotFoundException as BaseModelNotFoundException;
+
 /**
  * Class ModelNotFoundException
  *
- * 1001 - error when inserting database.
+ * 1001 - no results for model.
  *
  * @package App\Exceptions\Repositories
  */
