@@ -42,17 +42,18 @@ cd bildvitta
 composer install
 ```
 
-#### Gere a chave de segurança do ‘software’.
-```shell
-php artisan key:generate
-```
-
 #### Criar arquivo de configuração.
 Execute o comando abaixo para criar o seu arquivo `.env`.
 ```shell
 cp .env.example .env
 ```
 Após a criação do seu `.env` edite as suas configurações de banco de dados para prosseguirmos ao próximo passo.
+
+
+#### Gere a chave de segurança do ‘software’.
+```shell
+php artisan key:generate
+```
 
 #### Criando as tabelas no banco de dados.
 ```shell
