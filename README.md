@@ -7,14 +7,14 @@
 - PHP v8.
 - GIT v2
 - Composer v2.
-- Banco de dados: MySql, SQlite, PostgreSQL, SQLServer.
+- Banco de dados: MySql, SQLite, PostgreSQL, SQLServer.
 
 ## Descrição
-Esse software tem o intuito de fazer a conversão de moedas pré cadastradas, épossível informar a quantidade também.
+Esse ‘software’ tem o intuito de fazer a conversão de moedas pré-cadastradas, é possível informar a quantidade também.
 
 Para instalar e testar o projeto siga os passos a seguir:
 
-### Moedas disponiveis para conversão
+### Moedas disponíveis para conversão
 
 | Moeda | Código |
 |--------|--------|
@@ -42,23 +42,23 @@ cd bildvitta
 composer install
 ```
 
-#### Gere a chave de segurança do software.
+#### Gere a chave de segurança do ‘software’.
 ```shell
 php artisan key:generate
 ```
 
 #### Criar arquivo de configuração.
-Execute o comando abaixo para criar o seu aquivo `.env`.
+Execute o comando abaixo para criar o seu arquivo `.env`.
 ```shell
 cp .env.example .env
 ```
-Após a criação do seu `.env` edite as suas configuração de banco de dados para proceguirmos ao próximo passo.
+Após a criação do seu `.env` edite as suas configurações de banco de dados para prosseguirmos ao próximo passo.
 
 #### Criando as tabelas no banco de dados.
 ```shell
 php artisan migrate
 ```
-Nesse momento está sendo criado a tabela que irá conter as moedas disponiveis para conversão.
+Nesse momento está sendo criado a tabela que irá conter as moedas disponíveis para conversão.
 
 #### Cadastrando as moedas que estarão disponíveis para conversão.
 ```shell
@@ -74,7 +74,7 @@ php artisan serve
 ## Utilização
 
 Para utilizar a API, segue esse cURL de exemplo.
-Atenção a porta que está sendo rodado o software em seu sistema.
+Atenção a porta que está sendo rodado o ‘software’ no seu sistema.
 
 ```
 curl -L -X GET "http://127.0.0.1:8000/api/coins/conversions?coin_from=USD&coin_to=GBP&quantity=10" \
@@ -87,7 +87,7 @@ O endpoint da API é um *GET* e os paramatros deve ser enviado por *query string
 
 ### Parâmetros da API
 
-Segue os paramtros de nossa API.
+Segue os parâmetros da nossa API.
 
 #### Query String
 
@@ -96,12 +96,12 @@ Segue os paramtros de nossa API.
 |-----|-------------|-----------|
 | coin_from | SIM | Moeda de origen(De) |
 | coin_to | SIM | Modera de destino(Para) |
-| quantity | SIM | Qauntidade de moedas a serem convertidas |
+| quantity | SIM | Quantidade de moedas a serem convertidas |
 
 #### Headers
 | Key | Value | Obrigatório | Descrição |
 |-----|-------|------|-----------|
-| Token | config('services.api.token') | SIM | Qauntidade de moedas a serem convertidas |
+| Token | config('services.api.token') | SIM | Quantidade de moedas a serem convertidas |
 | Accept | application/json | NÃO | Tipo de conteúdo enviado a API |
 | Content-Type | application/json | NÃO | Tipo de conteúdo retornado da API |
 
