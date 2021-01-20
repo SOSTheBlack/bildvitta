@@ -57,7 +57,7 @@ php artisan test
 ### Exemplo de uso da API
 
 ```
-curl -L -X GET "http://bildvitta.test/api/coins/conversions?coin_from=USD&coin_to=GBP&quantity=10" \
+curl -L -X GET "http://127.0.0.1:8000/api/coins/conversions?coin_from=USD&coin_to=GBP&quantity=10" \
 -H 'Content-Type: application/json' \
 -H 'Accept: application/json' \
 -H 'Token: d812b49499b6b3e6b24a70cece02f2f7'
